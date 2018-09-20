@@ -19,12 +19,14 @@ namespace PlacesTravelled.Controllers {
         }//END
 
         [HttpPost]
-        public string Post ([FromBody] string place){
+        public Locations Post ([FromBody] Locations place){
+            var dbConnection = new PlacesTravelledContext();
+            dbConnection.Locations.Add(place);
+            dbConnection.SaveChanges();
+            return place;
+             
 
-
-            return "Successful Post "+place;
-
-        }
+        }//END 
 
 
 
