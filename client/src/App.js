@@ -27,10 +27,10 @@ class App extends Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        "Place": "Niagra Falls",
-        "Date": "2017-02-25",
-        "Note": "wet",
-        "WillIGoBack": true
+        "Place": this.state.location,
+        "Date": this.state.date,
+        "Note": this.state.note,
+        "WillIGoBack": this.state.willIGoBack
       })
     })
     .then(resp => resp.json())
