@@ -13,7 +13,8 @@ namespace PlacesTravelled.Controllers {
         public IOrderedQueryable<Locations> Get () {
               var dBConnection = new PlacesTravelledContext();
 
-              var locations = dBConnection.Locations.OrderByDescending(o => o.Date);
+              var locations = dBConnection.Locations.OrderBy(o => o.Place.ToLower())
+              .ThenBy(t => t.Date);
               return locations;
 
         }//END

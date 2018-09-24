@@ -8,15 +8,19 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      locations: [],
       location: '',
       date: new Date(),
       note: '',
-      willIGoBack: false,
-      locations: []
+      willIGoBack: false
     }
   }
   
   componentDidMount() {
+    this.getLatest()
+  }
+
+  getLatest = () => {
     fetch('https://localhost:5001/api/locations')
       .then(resp => resp.json())
       .then(json => {
@@ -41,8 +45,8 @@ class App extends Component {
       })
     })
     .then(resp => resp.json())
-    .then(data => {
-      console.log(data)
+    .then(_ => {
+      this.getLatest()
     })
   }
 
@@ -79,9 +83,9 @@ class App extends Component {
           </form>
           <section>
             {this.state.locations.map(location => {
-              return <div>
+              return <div key={location.id}>
                   <h3>{location.place}</h3>
-                  <time>{moment(location.date).format("MMM Do YY")}</time>
+                  <time>{moment(location.date).calendar()}</time>
                   <p>{location.note}</p>
                   <h6>{location.willIGoBack ? "Yes" : "No"}</h6>
 
