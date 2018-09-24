@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import moment from 'moment'
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -9,14 +11,19 @@ class App extends Component {
       location: '',
       date: new Date(),
       note: '',
-      willIGoBack: false
+      willIGoBack: false,
+      locations: []
     }
   }
   
   componentDidMount() {
     fetch('https://localhost:5001/api/locations')
       .then(resp => resp.json())
-      .then(json => { console.log(json) })
+      .then(json => {
+        this.setState({
+          locations: json
+        })
+      })
   }
 
   handleSubmit = (e) => {
@@ -70,6 +77,17 @@ class App extends Component {
             <input type="checkbox" name="willIGoBack" onChange={this.handleCheckbox}/>
             <button>Submit</button>
           </form>
+          <section>
+            {this.state.locations.map(location => {
+              return <div>
+                  <h3>{location.place}</h3>
+                  <time>{moment(location.date).format("MMM Do YY")}</time>
+                  <p>{location.note}</p>
+                  <h6>{location.willIGoBack ? "Yes" : "No"}</h6>
+
+                </div>
+            })}
+          </section>
         </section>
       </div>
     );
