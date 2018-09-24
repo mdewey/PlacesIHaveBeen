@@ -21,7 +21,22 @@ class App extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log("we've submitted...")
+    fetch("https://localhost:5001/api/locations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "Place": "Niagra Falls",
+        "Date": "2017-02-25",
+        "Note": "wet",
+        "WillIGoBack": true
+      })
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      console.log(data)
+    })
   }
 
   handleChange = (e) => {
