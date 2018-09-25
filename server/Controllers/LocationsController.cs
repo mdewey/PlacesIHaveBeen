@@ -29,8 +29,18 @@ namespace PlacesTravelled.Controllers {
 
         }//END 
 
-
-
+        [HttpPut("{id}")]
+        public Locations Put (int id) {
+            //Find the location inside the database with the Id
+            var dbConnection = new PlacesTravelledContext();
+            var location = dbConnection.Locations.FirstOrDefault(f => f.Id == id);
+            //Add 1 to TimesVisited
+            location.TimesVisited++;
+            //Save it to Database
+            dbConnection.SaveChanges();
+            //Return new information   
+            return location;         
+        }//END
 
     } //END public class LocationsController : ControllerBase
 } //END namespace PlacesTravelled.Controllers

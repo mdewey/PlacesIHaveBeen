@@ -10,7 +10,7 @@ namespace PlacesTravelled.DataModel {
 
         public bool WillIGoBack { get; set; }
 
-        public int TimesVisited { get; set; }
+        public int TimesVisited { get; set; } = 1;
 
     }
 }
