@@ -62,12 +62,22 @@ class App extends Component {
     })
   }
 
+  handleCheckingInAgainEvent = (id) => {
+    fetch(`https://localhost:5001/api/locations/${id}`, {
+      method: "PATCH",
+    })
+    .then(resp => resp.json())
+    .then(() => {
+      this.getLatest()
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Places I Been!</h1>
+          <h1 className="App-title">Places I've Been!</h1>
         </header>
         <section>
           <form onSubmit={this.handleSubmit}>
@@ -86,9 +96,10 @@ class App extends Component {
               return <div key={location.id}>
                   <h3>{location.place}</h3>
                   <time>{moment(location.date).calendar()}</time>
+                  <p>{location.timesVisited}</p>
                   <p>{location.note}</p>
                   <h6>{location.willIGoBack ? "Yes" : "No"}</h6>
-
+                  <button onClick={() => this.handleCheckingInAgainEvent(location.id)}>Check In Again</button>
                 </div>
             })}
           </section>
