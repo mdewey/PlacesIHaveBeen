@@ -12,7 +12,8 @@ class App extends Component {
       date: new Date(),
       note: "",
       willIGoBack: false,
-      deleteMessage: ""
+      deleteMessage: "", 
+      searchTerm:""
     };
   }
 
@@ -29,6 +30,11 @@ class App extends Component {
         });
       });
   };
+
+  handleSearch = e => {
+    e.preventDefault();
+    console.log(this.state.searchTerm);
+  }
 
   handleSubmit = e => {
     e.preventDefault();
@@ -79,9 +85,9 @@ class App extends Component {
       .then(resp => resp.json())
       .then(json => {
         this.getLatest();
-        if(json.success){
-          this.setState({deleteMessage: `${location.place} was removed`},()=> {
-            setTimeout(()=> {this.setState({deleteMessage:""})},2500)
+        if (json.success) {
+          this.setState({ deleteMessage: `${location.place} was removed` }, () => {
+            setTimeout(() => { this.setState({ deleteMessage: "" }) }, 2500)
           })
         }
       });
@@ -92,6 +98,10 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Places I've Been!</h1>
+          <form onSubmit={this.handleSearch}>
+            <input type="search" name="searchTerm" placeholder="Search my locations..." onChange={this.handleChange} />
+            <button>search</button>
+          </form>
         </header>
 
         <section className="content">
