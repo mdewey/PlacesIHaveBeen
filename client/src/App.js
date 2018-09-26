@@ -11,7 +11,8 @@ class App extends Component {
       location: "",
       date: new Date(),
       note: "",
-      willIGoBack: false
+      willIGoBack: false,
+      deleteMessage: ""
     };
   }
 
@@ -71,6 +72,21 @@ class App extends Component {
       });
   };
 
+  handleDeleteEvent = location => {
+    fetch(`https://localhost:5001/api/locations/${location.id}`, {
+      method: "DELETE"
+    })
+      .then(resp => resp.json())
+      .then(json => {
+        this.getLatest();
+        if(json.success){
+          this.setState({deleteMessage: `${location.place} was removed`},()=> {
+            setTimeout(()=> {this.setState({deleteMessage:""})},2500)
+          })
+        }
+      });
+  };
+
   render() {
     return (
       <div className="App">
@@ -104,6 +120,7 @@ class App extends Component {
             />
             <button>Submit</button>
           </form>
+          <h3>{this.state.deleteMessage}</h3>
           <section>
             {this.state.locations.map(location => {
               return (
@@ -117,6 +134,9 @@ class App extends Component {
                     onClick={() => this.handleCheckingInAgainEvent(location.id)}
                   >
                     Check In Again
+                  </button>
+                  <button onClick={() => this.handleDeleteEvent(location)}>
+                    Remove/ Forget
                   </button>
                 </div>
               );

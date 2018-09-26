@@ -44,10 +44,14 @@ namespace PlacesTravelled.Controllers {
             return location;         
         }//END
 
-        // [HttpDelete]
-        // public Locations Delete () {
-
-        // }
+        [HttpDelete("{id}")]
+        public ActionResult Delete (int id) {
+            var dbConnection = new PlacesTravelledContext();
+            var location = dbConnection.Locations.FirstOrDefault(f => f.Id == id);
+            dbConnection.Locations.Remove(location);
+            dbConnection.SaveChanges();
+            return Ok(new {success = true });
+        }
 
     } //END public class LocationsController : ControllerBase
 } //END namespace PlacesTravelled.Controllers
