@@ -30,7 +30,7 @@ namespace PlacesTravelled
             services
                 .AddEntityFrameworkNpgsql()
                 .AddDbContext<PlacesTravelledContext>(opt => 
-                    opt.UseNpgsql("server=localhost; Database=PlacesTravelled"));
+                    opt.UseNpgsql("server=localhost; Database=PlacesTravelled;;username=postgres;password=admin"));
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

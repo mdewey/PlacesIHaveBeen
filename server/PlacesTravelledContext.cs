@@ -20,7 +20,7 @@ namespace PlacesTravelled
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("server=localhost; Database=PlacesTravelled");
+                optionsBuilder.UseNpgsql("server=localhost; Database=PlacesTravelled;;username=postgres;password=admin");
             }
         }
 
