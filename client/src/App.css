@@ -1,3 +1,11 @@
+/* color theme, feel free to change: https://coolors.co/a54657-582630-f7ee7f-f1a66a-f26157 */
+
+:root {
+  --main-bg-color: #582630;
+  --action-color: #F7EE7F;
+}
+
+
 .App {
   text-align: center;
 }
@@ -8,13 +16,13 @@
 }
 
 .App-header {
-  background-color: #582630;
+  background-color: var(--main-bg-color);
   /* height: 50px; */
   padding: 10px;
   color: white;
 }
 .splash-app {
-  background-color: #582630;
+  background-color: var(--main-bg-color);
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -24,7 +32,7 @@
   height: 2em;
   font-size: 2em;
   border-radius: 4px;
-  background-color: #F7EE7F;
+  background-color: var(--action-color);
 }
 
 .main-logo{
