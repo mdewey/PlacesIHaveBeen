@@ -8,10 +8,27 @@
 }
 
 .App-header {
-  background-color: rgb(251, 0, 0);
+  background-color: #582630;
   /* height: 50px; */
   padding: 10px;
   color: white;
+}
+.splash-app {
+  background-color: #582630;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.splash-app button{
+  height: 2em;
+  font-size: 2em;
+  border-radius: 4px;
+  background-color: #F7EE7F;
+}
+
+.main-logo{
+  width: 100%;
 }
 
 .App-title {

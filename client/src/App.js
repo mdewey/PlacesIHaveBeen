@@ -7,6 +7,7 @@ import Callback from "./Components/Callback";
 
 import Auth from './Auth/Auth';
 import history from './Auth/History';
+import SplashPage from "./Components/SplashPage";
 
 const auth = new Auth();
 
@@ -21,7 +22,7 @@ class App extends Component {
    return (
     <Router history={history} >
        <Switch>
-         <Route path="/" exact component={HomePage}/>
+         <Route path="/" exact component={SplashPage}/>
          <Route path="/Home" exact component={HomePage}/>
          <Route path="/callback" render={(props) => {
           handleAuthentication(props);
