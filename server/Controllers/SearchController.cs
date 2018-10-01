@@ -37,19 +37,19 @@ namespace PlacesTravelled.Controllers
                 });
             // returns the results
 
-            var userResults = this.db
-                .Users
-                .Where(w => w.UserName.Contains(q))
-                .Take(5)
-                .Select( s => new SearchResults {
-                    Text= s.FullName, 
-                    Id= s.Id, 
-                    Type = "person"
-                });;
+            // var userResults = this.db
+            //     .Users
+            //     .Where(w => w.UserName.Contains(q))
+            //     .Take(5)
+            //     .Select( s => new SearchResults {
+            //         Text= s.FullName, 
+            //         Id= s.Id, 
+            //         Type = "person"
+            //     });;
 
             var results = new List<SearchResults>();
             results.AddRange(locationResults);
-            results.AddRange(userResults);
+            // results.AddRange(userResults);
 
 
             return results.OrderBy(o => o.Text);
