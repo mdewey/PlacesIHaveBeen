@@ -5,14 +5,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PlacesTravelled.DataModel;
 
+using Microsoft.AspNetCore.Authorization;
+
+
 namespace PlacesTravelled.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LocationsController : ControllerBase
     {
 
-
+        private string _getUserId(System.Security.Claims.ClaimsPrincipal user)
+        {
+            var userId = user.Claims.First(f => f.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value;
+            return userId;
+        }
+        
         private PlacesTravelledContext db { get; set; }
 
         public LocationsController(PlacesTravelledContext _db)
@@ -24,7 +33,8 @@ namespace PlacesTravelled.Controllers
         [HttpGet]
         public IOrderedQueryable<Locations> Get()
         {
-            var locations = this.db.Locations.OrderBy(o => o.Place.ToLower())
+            var _userId = _getUserId(User);
+            var locations = this.db.Locations.Where(w => w.UserId == _userId).OrderBy(o => o.Place.ToLower())
             .ThenBy(t => t.Date);
             return locations;
 
@@ -33,6 +43,8 @@ namespace PlacesTravelled.Controllers
         [HttpPost]
         public Locations Post([FromBody] Locations place)
         {
+            var _userId = _getUserId(User);
+            place.UserId = _userId;
             this.db.Locations.Add(place);
             this.db.SaveChanges();
             return place;

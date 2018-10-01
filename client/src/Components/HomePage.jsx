@@ -6,7 +6,8 @@ import Auth from '../Auth/Auth';
 const auth = new Auth();
 
 
-class HomePage extends Component {
+class
+    HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,16 +17,33 @@ class HomePage extends Component {
             note: "",
             willIGoBack: false,
             deleteMessage: "",
-            searchTerm: ""
+            searchTerm: "",
+            authed: {
+                isLoggedIn: false
+            }
         };
     }
 
     componentDidMount() {
-        this.getLatest();
+        if (auth.isAuthenticated()) {
+            this.getLatest();
+            auth.getProfile((err, profile) => {
+                this.setState({
+                    authed: {
+                        isLoggedIn: true,
+                        profile
+                    }
+                })
+            })
+        }
     }
 
     getLatest = () => {
-        fetch("https://localhost:5001/api/locations")
+        fetch("https://localhost:5001/api/locations", {
+            headers: {
+                "Authorization": "Bearer " + auth.getAccessToken()
+            }
+        })
             .then(resp => resp.json())
             .then(json => {
                 this.setState({
@@ -44,7 +62,8 @@ class HomePage extends Component {
         fetch("https://localhost:5001/api/locations", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.getAccessToken()
             },
             body: JSON.stringify({
                 Place: this.state.location,
@@ -101,11 +120,19 @@ class HomePage extends Component {
     }
 
     render() {
+        let button;
+
+        if (this.state.authed.isLoggedIn) {
+            button = <h3>Welcome {this.state.authed.profile.given_name}!</h3>
+        } else {
+            button = <h3><button onClick={this.login} >Log in</button></h3>
+        }
+        console.log(button)
         return (
             <div className="App">
                 <header className="App-header">
                     <h1 className="App-title">Places I've Been!</h1>
-                    <h3><button onClick={this.login}>Log in</button></h3>
+                    {button}
                     <form onSubmit={this.handleSearch}>
                         <input type="search" name="searchTerm" placeholder="Search my locations..." onChange={this.handleChange} />
                         <button>search</button>

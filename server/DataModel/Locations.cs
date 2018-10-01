@@ -12,5 +12,7 @@ namespace PlacesTravelled.DataModel {
 
         public int TimesVisited { get; set; } = 1;
 
+        public string UserId { get; set; }
+
     }
 }
