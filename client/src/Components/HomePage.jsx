@@ -13,7 +13,7 @@ class
         this.state = {
             locations: [],
             location: "",
-            date: new Date(),
+            // date: new Date(),
             note: "",
             willIGoBack: false,
             deleteMessage: "",
@@ -92,7 +92,10 @@ class
 
     handleCheckingInAgainEvent = id => {
         fetch(`https://localhost:5001/api/locations/${id}`, {
-            method: "PATCH"
+            method:"PATCH",
+            headers: {
+                "Authorization": "Bearer " + auth.getAccessToken()
+            }
         })
             .then(resp => resp.json())
             .then(() => {
@@ -102,7 +105,11 @@ class
 
     handleDeleteEvent = location => {
         fetch(`https://localhost:5001/api/locations/${location.id}`, {
-            method: "DELETE"
+            method:"DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.getAccessToken()
+            }
         })
             .then(resp => resp.json())
             .then(json => {
@@ -133,10 +140,10 @@ class
                 <header className="App-header">
                     <h1 className="App-title">Places I've Been!</h1>
                     {button}
-                    <form onSubmit={this.handleSearch}>
+                    {/* <form onSubmit={this.handleSearch}>
                         <input type="search" name="searchTerm" placeholder="Search my locations..." onChange={this.handleChange} />
                         <button>search</button>
-                    </form>
+                    </form> */}
                 </header>
 
                 <section className="content">
@@ -148,8 +155,8 @@ class
                             name="location"
                             onChange={this.handleChange}
                         />
-                        <p>Date</p>
-                        <input type="date" name="date" onChange={this.handleChange} />
+                        {/* <p>Date</p>
+                        <input type="date" name="date" onChange={this.handleChange} /> */}
                         <p>Note</p>
                         <textarea
                             height="100"
