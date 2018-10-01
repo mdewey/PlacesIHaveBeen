@@ -130,14 +130,21 @@ class
         auth.login();
     }
 
+    logout = () => {
+        auth.logout();
+    }
     render() {
-        let button;
+        let button = <h3></h3>;
 
         if (this.state.authed.isLoggedIn) {
-            button = <h3>Welcome {this.state.authed.profile.given_name}!</h3>
-        } else {
-            button = <h3><button onClick={this.login} >Log in</button></h3>
-        }
+            button = (
+                <h3>
+                    Welcome {this.state.authed.profile.given_name}!
+                    <a onClick={this.logout} className="logout-button">not you?</a> 
+                </h3>
+
+            )
+        } 
         return (
             <div className="App">
                 <header className="App-header">
